@@ -34,7 +34,6 @@
     "@mikro-orm/core": "^4.5.10",
     "@mikro-orm/reflection": "^4.5.10",
     "@mikro-orm/sqlite": "^4.5.10",
-    "currency.js": "^2.0.4",
     "express": "^4.17.2",
     "ts-node": "^10.4.0",
     "uuid": "^8.3.2"
