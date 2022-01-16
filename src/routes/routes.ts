@@ -1,5 +1,4 @@
 import express, { Request, Response } from 'express';
-
 // routes
 import inventory from './inventory';
 
