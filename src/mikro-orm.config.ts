@@ -7,6 +7,9 @@ const config: Options = {
   entitiesTs: ['./src/entities'],
   dbName: 'db/inventory',
   type: 'sqlite',
+  migrations: {
+    path: './src/migrations',
+  },
 };
 
 export default config;

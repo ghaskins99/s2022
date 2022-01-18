@@ -1,8 +1,9 @@
 import { Item, ItemInfo } from '../../entities/Item';
 
 export default interface ItemRepository {
-  listItems(): Promise<Item[]>;
+  listItems(deleted?: boolean): Promise<Item[]>;
   saveItem(item: Item): Promise<Item>;
-  updateItem(id: string, item: ItemInfo): Promise<Item>;
-  deleteItem(id: string): Promise<boolean>;
+  updateItem(uuid: string, item: ItemInfo): Promise<Item>;
+  deleteItem(uuid: string, reason: string): Promise<boolean>;
+  restoreItem(uuid: string): Promise<Item>;
 }

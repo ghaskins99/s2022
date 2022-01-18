@@ -3,8 +3,11 @@ import { Item, ItemInfo } from '../../entities/Item';
 import { DI } from '../../server';
 import ItemRepository from './ItemRepository';
 
-const listItems = async () => {
-  return DI.em.find(Item, {});
+const fieldNames = ['name, description, price_cents, inventory_count'];
+
+const listItems = async (deleted = false) => {
+  const fields = deleted ? [...fieldNames, 'deleted_reason'] : fieldNames;
+  return DI.em.find(Item, { deleted }, { fields });
 };
 
 const saveItem = async (item: Item) => {
@@ -12,8 +15,12 @@ const saveItem = async (item: Item) => {
   return item;
 };
 
-const updateItem = async (id: string, data: ItemInfo) => {
-  const item = await DI.em.findOne(Item, id);
+const updateItem = async (uuid: string, data: ItemInfo) => {
+  const item = await DI.em.findOne(
+    Item,
+    { uuid, deleted: false },
+    { fields: fieldNames }
+  );
 
   if (item) {
     wrap(item).assign(data);
@@ -23,15 +30,30 @@ const updateItem = async (id: string, data: ItemInfo) => {
   return item;
 };
 
-const deleteItem = async (id: string) => {
-  const item = await DI.em.findOne(Item, id);
+const deleteItem = async (uuid: string, reason: string) => {
+  const item = await DI.em.findOne(Item, uuid);
 
   if (item) {
-    await DI.em.removeAndFlush(item);
+    item.deleted = true;
+    item.deletedReason = reason;
+    await DI.em.flush();
     return true;
   }
 
   return false;
+};
+
+const restoreItem = async (uuid: string) => {
+  const item = await DI.em.findOne(Item, uuid);
+
+  if (item) {
+    item.deleted = false;
+    delete item.deletedReason;
+    await DI.em.flush();
+    return item;
+  }
+
+  return item;
 };
 
 export default {
@@ -39,4 +61,5 @@ export default {
   saveItem,
   updateItem,
   deleteItem,
+  restoreItem,
 } as ItemRepository;
