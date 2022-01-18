@@ -2,7 +2,7 @@
 
 ### setup
 
-- [install node](https://nodejs.org/en/download/)
+- [install node](https://nodejs.org/en/download/) (17 was used, 16/LTS was tested only for `dist/server.js`
 - clone the repository (and cd to s2022)
   - `git clone https://github.com/ghaskins99/s2022.git`
 - install dependencies
