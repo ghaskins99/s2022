@@ -25,7 +25,7 @@ export class Item {
   @Property()
   inventoryCount: number;
 
-  @Property({})
+  @Property()
   deleted = false;
 
   @Property()
