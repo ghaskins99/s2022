@@ -39,13 +39,35 @@ export const updateItem = async (req: Request, res: Response) => {
 
 export const deleteItem = async (req: Request, res: Response) => {
   try {
-    const deleted = await DI.itemRepository.deleteItem(req.params.uuid);
+    const deleted = await DI.itemRepository.deleteItem(
+      req.params.uuid,
+      req.body?.reason ?? ''
+    );
 
     if (!deleted) {
       return res.status(404).json({ message: 'item not found' });
     }
 
     return res.status(204).end();
+  } catch (e) {
+    return handleError(e as Error, res);
+  }
+};
+
+export const getDeletedItems = async (req: Request, res: Response) => {
+  const items = await DI.itemRepository.listItems(true);
+  res.json(items);
+};
+
+export const restoreItem = async (req: Request, res: Response) => {
+  try {
+    const restored = await DI.itemRepository.restoreItem(req.params.uuid);
+
+    if (!restored) {
+      return res.status(404).json({ message: 'item not found' });
+    }
+
+    return res.json(restored);
   } catch (e) {
     return handleError(e as Error, res);
   }

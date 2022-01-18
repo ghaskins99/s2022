@@ -1,0 +1,38 @@
+// get list
+curl --request GET \
+  --url http://localhost:8000/api/inventory
+
+// save item
+curl --request PUT \
+  --url http://localhost:8000/api/inventory \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"name": "item name",
+	"description": "desc for the item",
+	"priceCents": 35487546,
+	"inventoryCount": 1
+}'
+
+// update item
+curl --request PUT \
+  --url http://localhost:8000/api/inventory/<YOUR ITEM ID> \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"description": "new description"
+}'
+
+// delete item
+curl --request DELETE \
+  --url http://localhost:8000/api/inventory/<YOUR ITEM ID> \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"reason": "deletion reason"
+}'
+
+// show deleted items
+curl --request GET \
+  --url http://localhost:8000/api/inventory/archive
+
+// undelete an item
+curl --request POST \
+  --url http://localhost:8000/api/inventory/restore/<YOUR ITEM ID>

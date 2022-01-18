@@ -11,7 +11,7 @@ import config from './mikro-orm.config';
   await orm.em.removeAndFlush(existing);
 
   const created = [];
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 1; i <= 5; i++) {
     created.push(
       new Item({
         name: `Some inventory item #${i}`,

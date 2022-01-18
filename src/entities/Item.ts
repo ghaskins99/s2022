@@ -25,6 +25,12 @@ export class Item {
   @Property()
   inventoryCount: number;
 
+  @Property({})
+  deleted = false;
+
+  @Property()
+  deletedReason?: string;
+
   // unused by mikroORM but may be useful for other
   constructor({ name, description, priceCents, inventoryCount }: ItemInfo) {
     this.name = name;

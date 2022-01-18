@@ -1,0 +1,32 @@
+// get list
+$response = Invoke-WebRequest -Uri 'http://localhost:8000/api/inventory' -Method GET 
+
+// save item
+$headers=@{}
+$headers.Add("Content-Type", "application/json")
+$response = Invoke-WebRequest -Uri 'http://localhost:8000/api/inventory' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{
+	"name": "item name",
+	"description": "desc for the item",
+	"priceCents": 35487546,
+	"inventoryCount": 1
+}'
+
+// update item
+$headers=@{}
+$headers.Add("Content-Type", "application/json")
+$response = Invoke-WebRequest -Uri 'http://localhost:8000/api/inventory/<YOUR ITEM ID>' -Method PUT -Headers $headers -ContentType 'application/json' -Body '{
+	"description": "new description"
+}'
+
+// delete item
+$headers=@{}
+$headers.Add("Content-Type", "application/json")
+$response = Invoke-WebRequest -Uri 'http://localhost:8000/api/inventory/<YOUR ITEM ID>' -Method DELETE -Headers $headers -ContentType 'application/json' -Body '{
+	"reason": "deletion reason"
+}'
+
+// show deleted items
+$response = Invoke-WebRequest -Uri 'http://localhost:8000/api/inventory/archive' -Method GET 
+
+// undelete an item
+$response = Invoke-WebRequest -Uri 'http://localhost:8000/api/inventory/restore/<YOUR ITEM ID>' -Method POST 
